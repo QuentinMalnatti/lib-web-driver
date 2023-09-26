@@ -1,1 +1,5 @@
 git+https://github.com/QuentinMalnatti/lib-logger.git@v0.1.4#egg=personallogger
+
+selenium==4.10.0
+undetected_chromedriver==3.5.3
+webdriver_manager==4.0.1
