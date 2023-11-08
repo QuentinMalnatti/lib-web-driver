@@ -15,5 +15,9 @@ class AbstractNotifier(ABC):
         driver.close_tab()
 
     @abstractmethod
+    def connect(self, driver: Driver):
+        raise NotImplementedError
+
+    @abstractmethod
     def send(self, driver: Driver, receiver: str, message: str = "TEST"):
         raise NotImplementedError

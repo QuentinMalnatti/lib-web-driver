@@ -14,7 +14,7 @@ class WhatsappNotifier(AbstractNotifier):
     @LoggerDecorator.log_success_as_success(
         stage="Send Whatsapp message",
         exception_to_catch=NoSuchElementException,
-        error_msg=f"Impossible to send the message",
+        error_msg="Impossible to send the message",
         to_raise=True,
     )
     def send(self, driver: Driver, receiver: str, message: str = "TEST"):
@@ -26,5 +26,3 @@ class WhatsappNotifier(AbstractNotifier):
 
         send_button = driver.get_element_by_class_name(value="epia9gcq")
         driver.click(element=send_button)
-
-        sleep(1)
