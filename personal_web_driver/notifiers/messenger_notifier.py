@@ -6,6 +6,7 @@ from .abstract_notifier import AbstractNotifier
 from personal_web_driver.driver import Driver
 from personal_web_driver.getters.button import ButtonGetter
 from personal_web_driver.getters.span import SpanGetter
+from personal_web_driver.getters.div import DivGetter
 from personal_logger.logger import LoggerDecorator
 
 
@@ -43,7 +44,19 @@ class MessengerNotifier(AbstractNotifier):
         to_raise=True,
     )
     def send(self, driver: Driver, receiver: str, message: str = "TEST"):
-        user = driver.get_element_by_xpath(getter=SpanGetter, method="contains", attribute="title", value=receiver)
+        try:
+            user = self.get_user(driver=driver, receiver=receiver)
+        except NoSuchElementException:
+            user = self.get_user(driver=driver, receiver=f"{receiver} ")
+
         driver.click(element=user)
-        while True:
-            pass
+
+        message_input = driver.get_element_by_xpath(getter=DivGetter, method="contains", attribute="aria-label", value="Écrire un message")
+        driver.fill_input(element=message_input, value=message)
+
+        send_button = driver.get_element_by_xpath(getter=DivGetter, method="contains", attribute="aria-label", value="Appuyer sur Entrée pour envoyer")
+        driver.click(element=send_button)
+
+    @staticmethod
+    def get_user(driver: Driver, receiver: str):
+        return driver.get_element_by_xpath(getter=SpanGetter, method="equals", attribute="text", value=receiver)

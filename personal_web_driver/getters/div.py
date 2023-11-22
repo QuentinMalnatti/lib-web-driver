@@ -5,4 +5,11 @@ class DivGetter(AbstractGetter):
 
     @staticmethod
     def get_xpath(method: str, attribute: str, value: str) -> str:
-        return f"//div[{method}({attribute}(), '{value}')]"
+        xpath = "//div["
+        if method == "contains":
+            xpath += f"{method}("
+            if attribute == "aria-label":
+                xpath += f"@{attribute}"
+            else:
+                xpath += f"{attribute}()"
+            return xpath + f", '{value}')]"

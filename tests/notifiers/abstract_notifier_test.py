@@ -1,3 +1,4 @@
+import os
 from typing import Type
 from abc import ABC, abstractmethod
 
@@ -6,7 +7,7 @@ from personal_web_driver.driver import Driver
 
 
 class AbstractNotifierTest(ABC):
-    RECEIVER = None
+    RECEIVER = os.getenv("RECEIVER")
     MESSAGE = "Test message"
 
     def __init__(self, notifier: Type[AbstractNotifier]):
