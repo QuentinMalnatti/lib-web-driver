@@ -1,21 +1,23 @@
 from time import sleep
 from typing import Type
+from random import randint
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 import undetected_chromedriver as uc
 from webdriver_manager.chrome import ChromeDriverManager
 
-from personal_logger.logger import LoggerDecorator
+from personal_logger.logger import LoggerDecorator, LoggerBase
 
 from .getters.abstract_getter import AbstractGetter
 
 
 class Driver(object):
 
-    def __init__(self):
+    def __init__(self, headless_option: bool = False):
         options = uc.ChromeOptions()
-        self.__driver = uc.Chrome(driver_executable_path=ChromeDriverManager().install(), options=options)
+        path_driver = ChromeDriverManager().install().replace("THIRD_PARTY_NOTICES.chromedriver", "chromedriver")
+        self.__driver = uc.Chrome(driver_executable_path=path_driver, options=options, headless=headless_option)
 
     @LoggerDecorator.log(stage="Launch driver")
     def launch(self, url: str):
@@ -66,3 +68,17 @@ class Driver(object):
 
     def close_tab(self):
         self.__driver.close()
+
+    @staticmethod
+    @LoggerDecorator.log(stage="Add some human behavior by running a pause")
+    def sleep_rand(lower: int, upper: int):
+        LoggerBase.print_timed_message(msg=f"Sleep time range : {lower} and {upper} seconds")
+        sleep_time = randint(lower, upper)
+        LoggerBase.print_timed_message(msg=f"Pause run for {sleep_time} seconds")
+        sleep(sleep_time)
+
+    @staticmethod
+    @LoggerDecorator.log(stage="Freeze")
+    def freeze():
+        while True:
+            pass

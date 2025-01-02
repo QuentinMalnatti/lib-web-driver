@@ -10,9 +10,9 @@ class AbstractNotifierTest(ABC):
     RECEIVER = os.getenv("RECEIVER")
     MESSAGE = "Test message"
 
-    def __init__(self, notifier: Type[AbstractNotifier]):
+    def __init__(self, notifier: Type[AbstractNotifier], headless_option: bool = False):
         self._notifier = notifier()
-        self._driver = Driver()
+        self._driver = Driver(headless_option=headless_option)
         self._driver.launch(url=self._notifier.URL)
 
     def _standard_run(self):

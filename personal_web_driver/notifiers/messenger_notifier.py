@@ -20,22 +20,54 @@ class MessengerNotifier(AbstractNotifier):
         to_raise=True,
     )
     def connect(self, driver: Driver):
-        try:
-            button_cookies = driver.get_element_by_xpath(
-                getter=ButtonGetter, method="contains", attribute="text", value="Refuser les cookies"
-            )
-            driver.click(button_cookies)
-        except NoSuchElementException:
-            pass
+        self.__close_cookies_popup_if_exists(driver=driver)
 
         input_id = driver.get_element_by_id(value="email")
         driver.fill_input(element=input_id, value=os.getenv("ID"))
+        driver.sleep_rand(2, 5)
 
         input_pwd = driver.get_element_by_id(value="pass")
         driver.fill_input(element=input_pwd, value=os.getenv("PWD"))
+        driver.sleep_rand(2, 5)
 
         button_login = driver.get_element_by_id(value="loginbutton")
-        driver.click(element=button_login, sleep_time=5)
+        driver.click(element=button_login, sleep_time=10)
+
+        self.__close_restore_old_messages_pop_up_if_exists(driver)
+
+    @staticmethod
+    @LoggerDecorator.log_success_as_success(
+        stage="Close cookies pop-up",
+        exception_to_catch=NoSuchElementException,
+        error_msg="No cookies pop-up to handle",
+        to_raise=False
+    )
+    def __close_cookies_popup_if_exists(driver: Driver):
+        button_cookies = driver.get_element_by_xpath(
+            getter=ButtonGetter, method="contains", attribute="text", value="Refuser les cookies"
+        )
+        driver.click(button_cookies, sleep_time=2)
+
+    @staticmethod
+    @LoggerDecorator.log_success_as_success(
+        stage="Close restore old messages pop-up",
+        exception_to_catch=NoSuchElementException,
+        error_msg="No restore old messages pop-up to handle",
+        to_raise=False
+    )
+    def __close_restore_old_messages_pop_up_if_exists(driver: Driver):
+        # test if pop-up exists
+        driver.get_element_by_id(value="mw-numeric-code-input-prevent-composer-focus-steal")
+
+        button_close_pin_pop_up = driver.get_element_by_xpath(
+            getter=DivGetter, method="contains", attribute="aria-label", value="Fermer"
+        )
+        driver.click(button_close_pin_pop_up, sleep_time=2)
+
+        button_do_not_restore = driver.get_element_by_xpath(
+            getter=DivGetter, method="contains", attribute="aria-label", value="Ne pas restaurer les messages"
+        )
+        driver.click(button_do_not_restore, sleep_time=2)
 
     @LoggerDecorator.log_success_as_success(
         stage="Send Messenger message",
