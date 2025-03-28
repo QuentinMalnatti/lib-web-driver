@@ -31,6 +31,10 @@ class Driver(object):
     def refresh(self):
         self.__driver.refresh()
 
+    @LoggerDecorator.log(stage="Save a screenshot")
+    def save_screenshot(self, path_screenshot):
+        self.__driver.save_screenshot(path_screenshot)
+
     def get_element_by_xpath(self, getter: Type[AbstractGetter], method: str, attribute: str, value: str):
         xpath = getter.get_xpath(method=method, attribute=attribute, value=value)
         return self.__driver.find_element(By.XPATH, xpath)
