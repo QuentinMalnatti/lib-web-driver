@@ -14,8 +14,9 @@ from .getters.abstract_getter import AbstractGetter
 
 class Driver(object):
 
-    def __init__(self, headless_option: bool = False):
+    def __init__(self, headless_option: bool = False, lang: str = "fr"):
         options = uc.ChromeOptions()
+        options.add_argument(f"--lang={lang}")
         path_driver = ChromeDriverManager().install().replace("THIRD_PARTY_NOTICES.chromedriver", "chromedriver")
         self.__driver = uc.Chrome(driver_executable_path=path_driver, options=options, headless=headless_option)
 
