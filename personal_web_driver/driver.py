@@ -41,6 +41,10 @@ class Driver(object):
     def save_screenshot(self, path_screenshot):
         self.__driver.save_screenshot(path_screenshot)
 
+    @LoggerDecorator.log(stage="get page source")
+    def get_page_source(self):
+        return self.__driver.page_source
+
     def get_element_by_xpath(self, getter: Type[AbstractGetter], method: str, attribute: str, value: str):
         xpath = getter.get_xpath(method=method, attribute=attribute, value=value)
         return self.__driver.find_element(By.XPATH, xpath)
