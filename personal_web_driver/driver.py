@@ -1,5 +1,5 @@
 from time import sleep
-from typing import Type
+from typing import Type, Any, Optional
 from random import randint
 
 from selenium.webdriver.common.by import By
@@ -14,9 +14,14 @@ from .getters.abstract_getter import AbstractGetter
 
 class Driver(object):
 
-    def __init__(self, headless_option: bool = False, lang: str = "fr"):
+    def __init__(self, headless_option: bool = False, lang: str = "fr", experimental_options: Optional[list[dict[str, Any]]] = None):
         options = uc.ChromeOptions()
         options.add_argument(f"--lang={lang}")
+
+        if experimental_options:
+            for o in experimental_options:
+                options.add_experimental_option("prefs", o)
+
         path_driver = ChromeDriverManager().install().replace("THIRD_PARTY_NOTICES.chromedriver", "chromedriver")
         self.__driver = uc.Chrome(driver_executable_path=path_driver, options=options, headless=headless_option)
 
