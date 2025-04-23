@@ -33,7 +33,7 @@ class MessengerNotifier(AbstractNotifier):
         button_login = driver.get_element_by_id(value="loginbutton")
         driver.click(element=button_login, sleep_time=10)
 
-        driver.sleep_rand(2, 3)
+        driver.sleep_rand(5, 8)
         self.__close_restore_old_messages_pop_up_if_exists(driver)
 
     @staticmethod
