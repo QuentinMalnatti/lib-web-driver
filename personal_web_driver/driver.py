@@ -101,11 +101,9 @@ class Driver(object):
         self.set_current_page_source()
 
     @staticmethod
-    @LoggerDecorator.log(stage="Add some human behavior by running a pause")
     def sleep_rand(lower: int, upper: int):
-        LoggerBase.print_timed_message(msg=f"Sleep time range : {lower} and {upper} seconds")
         sleep_time = randint(lower, upper)
-        LoggerBase.print_timed_message(msg=f"Pause run for {sleep_time} seconds")
+        LoggerBase.print_timed_message(msg=f"Add some human behavior by running a pause between {lower} and {upper} seconds ({sleep_time} seconds applied)")
         sleep(sleep_time)
 
     @staticmethod
