@@ -74,6 +74,9 @@ class Driver(object):
     def get_element_by_id(self, value: str):
         return self.__driver.find_element(By.ID, value)
 
+    def get_element_by_name(self, value: str):
+        return self.__driver.find_element(By.NAME, value)
+
     def get_element_by_tag_name(self, value: str):
         return self.__driver.find_element(By.TAG_NAME, value)
 

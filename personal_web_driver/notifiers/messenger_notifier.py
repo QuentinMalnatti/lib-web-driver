@@ -24,6 +24,9 @@ class MessengerNotifier(AbstractNotifier):
         driver.sleep_rand(3, 5)
 
         input_id = driver.get_element_by_id(value="email")
+        print(input_id)
+        input_name = driver.get_element_by_name(value="email")
+        print(input_name)
         driver.fill_input(element=input_id, value=os.getenv("ID"))
         driver.sleep_rand(2, 5)
 
