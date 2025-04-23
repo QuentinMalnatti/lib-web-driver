@@ -21,6 +21,7 @@ class MessengerNotifier(AbstractNotifier):
     )
     def connect(self, driver: Driver):
         self.__close_cookies_popup_if_exists(driver=driver)
+        driver.sleep_rand(3, 5)
 
         input_id = driver.get_element_by_id(value="email")
         driver.fill_input(element=input_id, value=os.getenv("ID"))
