@@ -14,13 +14,20 @@ from .getters.abstract_getter import AbstractGetter
 
 class Driver(object):
 
-    def __init__(self, headless_option: bool = False, lang: str = "fr", experimental_options: Optional[list[dict[str, Any]]] = None):
+    def __init__(self,
+                 headless_option: bool = False,
+                 driver_options: Optional[list[str]] = None,
+                 experimental_options: Optional[list[dict[str, Any]]] = None):
+
         options = uc.ChromeOptions()
-        options.add_argument(f"--lang={lang}")
+
+        if driver_options:
+            for do in driver_options:
+                options.add_argument(do)
 
         if experimental_options:
-            for o in experimental_options:
-                options.add_experimental_option("prefs", o)
+            for eo in experimental_options:
+                options.add_experimental_option("prefs", eo)
 
         path_driver = ChromeDriverManager().install().replace("THIRD_PARTY_NOTICES.chromedriver", "chromedriver")
         self.__driver = uc.Chrome(driver_executable_path=path_driver, options=options, headless=headless_option)
