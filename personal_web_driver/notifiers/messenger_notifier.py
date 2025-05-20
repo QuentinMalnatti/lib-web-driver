@@ -23,11 +23,11 @@ class MessengerNotifier(AbstractNotifier):
         self.__close_cookies_popup_if_exists(driver=driver)
 
         input_id = driver.get_element_by_id(value="email")
-        driver.fill_input(element=input_id, value=os.getenv("ID"))
+        driver.fill_input(element=input_id, value=os.getenv("UID"))
         driver.sleep_rand(2, 5)
 
         input_pwd = driver.get_element_by_id(value="pass")
-        driver.fill_input(element=input_pwd, value=os.getenv("PWD"))
+        driver.fill_input(element=input_pwd, value=os.getenv("UPWD"))
         driver.sleep_rand(2, 5)
 
         button_login = driver.get_element_by_id(value="loginbutton")
