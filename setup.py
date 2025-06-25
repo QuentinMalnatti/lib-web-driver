@@ -6,7 +6,7 @@ setup(
     author="Quentin Malnatti",
     packages=["personal_web_driver", "personal_web_driver.getters", "personal_web_driver.notifiers"],
     install_requires=["personal_logger", "selenium", "undetected_chromedriver", "webdriver_manager"],
-    version="1.1.14",
+    version="1.2.0",
     description="Personal web driver",
     long_description=open("README.md").read(),
 )

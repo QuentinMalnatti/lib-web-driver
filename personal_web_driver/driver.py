@@ -58,8 +58,12 @@ class Driver(object):
     def save_screenshot(self, path_screenshot):
         self.__driver.save_screenshot(path_screenshot)
 
-    def get_element_by_xpath(self, getter: Type[AbstractGetter], method: str, attribute: str, value: str):
+    def get_element_by_xpath(self, getter: Type[AbstractGetter], method: str, attribute: str, value: str, multiple=False):
         xpath = getter.get_xpath(method=method, attribute=attribute, value=value)
+
+        if multiple:
+            return self.__driver.find_elements(By.XPATH, xpath)
+
         return self.__driver.find_element(By.XPATH, xpath)
 
     @classmethod
@@ -68,16 +72,28 @@ class Driver(object):
             element = element.find_element(By.XPATH, "..")
         return element
 
-    def get_element_by_class_name(self, value: str):
+    def get_element_by_class_name(self, value: str, multiple=False):
+        if multiple:
+            return self.__driver.find_elements(By.CLASS_NAME, value)
+
         return self.__driver.find_element(By.CLASS_NAME, value)
 
-    def get_element_by_id(self, value: str):
+    def get_element_by_id(self, value: str, multiple=False):
+        if multiple:
+            return self.__driver.find_elements(By.ID, value)
+
         return self.__driver.find_element(By.ID, value)
 
-    def get_element_by_name(self, value: str):
+    def get_element_by_name(self, value: str, multiple=False):
+        if multiple:
+            return self.__driver.find_elements(By.NAME, value)
+
         return self.__driver.find_element(By.NAME, value)
 
-    def get_element_by_tag_name(self, value: str):
+    def get_element_by_tag_name(self, value: str, multiple=False):
+        if multiple:
+            return self.__driver.find_elements(By.TAG_NAME, value)
+
         return self.__driver.find_element(By.TAG_NAME, value)
 
     @classmethod
