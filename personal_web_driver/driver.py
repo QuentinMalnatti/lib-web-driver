@@ -7,8 +7,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import undetected_chromedriver as uc
 from webdriver_manager.chrome import ChromeDriverManager
 
-from personal_logger.logger import LoggerDecorator, LoggerBase
-
+from .logger import LoggerDecoratorWebDriver
 from .getters.abstract_getter import AbstractGetter
 
 
@@ -40,21 +39,21 @@ class Driver(object):
     def set_current_page_source(self):
         self.__current_page_source = self.__driver.page_source
 
-    @LoggerDecorator.log(stage="Launch driver")
+    @LoggerDecoratorWebDriver.log(stage="Launch driver")
     def launch(self, url: str):
         self.__driver.get(url=url)
         self.set_current_page_source()
 
-    @LoggerDecorator.log(stage="Quit driver")
+    @LoggerDecoratorWebDriver.log(stage="Quit driver")
     def quit(self):
         self.__driver.quit()
 
-    @LoggerDecorator.log(stage="Refresh driver")
+    @LoggerDecoratorWebDriver.log(stage="Refresh driver")
     def refresh(self):
         self.__driver.refresh()
         self.set_current_page_source()
 
-    @LoggerDecorator.log(stage="Save a screenshot")
+    @LoggerDecoratorWebDriver.log(stage="Save a screenshot")
     def save_screenshot(self, path_screenshot):
         self.__driver.save_screenshot(path_screenshot)
 
@@ -122,11 +121,11 @@ class Driver(object):
     @staticmethod
     def sleep_rand(lower: int, upper: int):
         sleep_time = randint(lower, upper)
-        LoggerBase.print_timed_message(msg=f"Add some human behavior by running a pause between {lower} and {upper} seconds ({sleep_time} seconds applied)")
+        LoggerDecoratorWebDriver.get_logger_base().print_timed_message(msg=f"Add some human behavior by running a pause between {lower} and {upper} seconds ({sleep_time} seconds applied)")
         sleep(sleep_time)
 
     @staticmethod
-    @LoggerDecorator.log(stage="Freeze")
+    @LoggerDecoratorWebDriver.log(stage="Freeze")
     def freeze():
         while True:
             pass

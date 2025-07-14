@@ -7,13 +7,13 @@ from personal_web_driver.driver import Driver
 from personal_web_driver.getters.button import ButtonGetter
 from personal_web_driver.getters.span import SpanGetter
 from personal_web_driver.getters.div import DivGetter
-from personal_logger.logger import LoggerDecorator
+from personal_web_driver.logger import LoggerDecoratorWebDriver
 
 
 class MessengerNotifier(AbstractNotifier):
     URL = "https://www.messenger.com/"
 
-    @LoggerDecorator.log_success_as_success(
+    @LoggerDecoratorWebDriver.log_success_as_success(
         stage="Connect to Messenger",
         exception_to_catch=NoSuchElementException,
         error_msg="Impossible to connect",
@@ -37,7 +37,7 @@ class MessengerNotifier(AbstractNotifier):
         self.__close_restore_old_messages_pop_up_if_exists(driver)
 
     @staticmethod
-    @LoggerDecorator.log_success_as_success(
+    @LoggerDecoratorWebDriver.log_success_as_success(
         stage="Close cookies pop-up",
         exception_to_catch=NoSuchElementException,
         error_msg="No cookies pop-up to handle",
@@ -50,7 +50,7 @@ class MessengerNotifier(AbstractNotifier):
         driver.click(button_cookies, sleep_time=2)
 
     @staticmethod
-    @LoggerDecorator.log_success_as_success(
+    @LoggerDecoratorWebDriver.log_success_as_success(
         stage="Close restore old messages pop-up",
         exception_to_catch=NoSuchElementException,
         error_msg="No restore old messages pop-up to handle",
@@ -70,7 +70,7 @@ class MessengerNotifier(AbstractNotifier):
         )
         driver.click(button_do_not_restore, sleep_time=2)
 
-    @LoggerDecorator.log_success_as_success(
+    @LoggerDecoratorWebDriver.log_success_as_success(
         stage="Send Messenger message",
         exception_to_catch=NoSuchElementException,
         error_msg="Impossible to send the message",

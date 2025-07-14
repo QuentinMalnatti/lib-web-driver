@@ -4,13 +4,13 @@ from selenium.common.exceptions import NoSuchElementException
 
 from .abstract_notifier import AbstractNotifier
 from personal_web_driver.driver import Driver
-from personal_logger.logger import LoggerDecorator
+from personal_web_driver.logger import LoggerDecoratorWebDriver
 
 
 class TawkToNotifier(AbstractNotifier):
     URL = "https://dashboard.tawk.to/login"
 
-    @LoggerDecorator.log_success_as_success(
+    @LoggerDecoratorWebDriver.log_success_as_success(
         stage="Connect to TawkTo",
         exception_to_catch=NoSuchElementException,
         error_msg="Impossible to connect",
@@ -28,7 +28,7 @@ class TawkToNotifier(AbstractNotifier):
         button_sign_in = driver.get_element_by_id(value="submit-login")
         driver.click(element=button_sign_in, sleep_time=10)
 
-    @LoggerDecorator.log_success_as_success(
+    @LoggerDecoratorWebDriver.log_success_as_success(
         stage="Send TawkTo message",
         exception_to_catch=NoSuchElementException,
         error_msg="Impossible to send the message",
@@ -48,7 +48,7 @@ class TawkToNotifier(AbstractNotifier):
 
     @staticmethod
     def __open_ticket(driver: Driver, receiver: str):
-        list_items = driver.get_element_by_tag_name(value="p", multiple=True)  # get_element_by_class_name(value="list-item", multiple=True)
+        list_items = driver.get_element_by_tag_name(value="p", multiple=True)
         for e in list_items:
             if e.text == receiver:
                 driver.click(element=e, sleep_time=5)

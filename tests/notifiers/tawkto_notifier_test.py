@@ -12,5 +12,5 @@ class TawkToNotifierTest(AbstractNotifierTest):
 
 
 if __name__ == "__main__":
-    notifier_test = TawkToNotifierTest(headless_option=False)
+    notifier_test = TawkToNotifierTest(headless_option=True)
     notifier_test.run()

@@ -1,6 +1,3 @@
 .idea
 
-personal_web_driver/__pycache__
-personal_web_driver/getters/__pycache__
-personal_web_driver/notifiers/__pycache__
-tests/notifiers/__pycache__
+**/__pycache__
