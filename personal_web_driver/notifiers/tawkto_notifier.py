@@ -28,6 +28,19 @@ class TawkToNotifier(AbstractNotifier):
         button_sign_in = driver.get_element_by_id(value="submit-login")
         driver.click(element=button_sign_in, sleep_time=10)
 
+        self.__close_ad_popup_if_exists(driver)
+
+    @staticmethod
+    @LoggerDecoratorWebDriver.log_success_as_success(
+        stage="Close ad pop-up",
+        exception_to_catch=NoSuchElementException,
+        error_msg="No ad pop-up to handle",
+        to_raise=False
+    )
+    def __close_ad_popup_if_exists(driver: Driver):
+        button_close_ad = driver.get_element_by_id("close-ad")
+        driver.click(button_close_ad, sleep_time=2)
+
     @LoggerDecoratorWebDriver.log_success_as_success(
         stage="Send TawkTo message",
         exception_to_catch=NoSuchElementException,
