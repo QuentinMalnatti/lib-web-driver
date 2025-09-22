@@ -71,6 +71,14 @@ class Driver(object):
             element = element.find_element(By.XPATH, "..")
         return element
 
+    @classmethod
+    def get_preceding_sibling_element(cls, element, element_type: str, index: int = 1):
+        return element.find_element(By.XPATH, f"preceding-sibling::{element_type}[{index}]")
+
+    @classmethod
+    def get_following_sibling_element(cls, element, element_type: str, index: int = 1):
+        return element.find_element(By.XPATH, f"following-sibling::{element_type}[{index}]")
+
     def get_element_by_class_name(self, value: str, multiple=False):
         if multiple:
             return self.__driver.find_elements(By.CLASS_NAME, value)
