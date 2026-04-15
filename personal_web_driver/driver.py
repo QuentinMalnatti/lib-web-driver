@@ -57,6 +57,9 @@ class Driver(object):
     def save_screenshot(self, path_screenshot):
         self.__driver.save_screenshot(path_screenshot)
 
+    def get_current_url(self):
+        return self.__driver.current_url
+
     def get_element_by_xpath(self, getter: Type[AbstractGetter], method: str, attribute: str, value: str, multiple=False):
         xpath = getter.get_xpath(method=method, attribute=attribute, value=value)
 
@@ -137,4 +140,3 @@ class Driver(object):
     def freeze():
         while True:
             pass
-
